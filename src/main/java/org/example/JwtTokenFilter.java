@@ -25,8 +25,7 @@ public class JwtTokenFilter extends AuthenticatingFilter {
                 // Token is expired or invalid, log out the user
                 SecurityUtils.getSubject().logout();
                 // Redirect to Keycloak logout
-                // ((HttpServletResponse) response).sendRedirect("https://keycloak-url/auth/realms/{realm}/protocol/openid-connect/logout?redirect_uri=your-app-url");
-                ((HttpServletResponse) response).sendRedirect("https://beak.bmi.stonybrook.edu:8889/auth/realms/Halcyon/protocol/openid-connect/logout");
+                ((HttpServletResponse) response).sendRedirect("https://keycloak-url/auth/realms/{realm}/protocol/openid-connect/logout?redirect_uri=your-app-url");
                 return false; // Stop further processing
             }
             return true; // Token is valid, allow request

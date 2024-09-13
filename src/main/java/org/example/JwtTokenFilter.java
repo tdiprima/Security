@@ -30,8 +30,13 @@ public class JwtTokenFilter extends AuthenticatingFilter {
             if (claims != null) {
                 // Create an AuthenticationToken using parsed claims (e.g., username)
                 String username = claims.getSubject();  // Assumes subject is the username
+                System.out.println("JWT Token successfully parsed. Username: " + username);
                 return new UsernamePasswordToken(username, jwtToken);
+            } else {
+                System.out.println("JWT Token is invalid or cannot be parsed.");
             }
+        } else {
+            System.out.println("No JWT Token found in the request.");
         }
         return null;  // If token is missing or invalid, return null
     }
@@ -41,25 +46,33 @@ public class JwtTokenFilter extends AuthenticatingFilter {
         // Check for a valid token
         String token = getTokenFromRequest(request);
         if (token != null) {
+            System.out.println("JWT Token found: " + token);
             Claims claims = jwtUtil.parseToken(token);
-            if (claims == null || jwtUtil.isTokenExpired(claims)) {
-                // Token is invalid or expired, log out the user and redirect to Keycloak logout
+            if (claims == null) {
+                System.out.println("Invalid JWT Token.");
+            } else if (jwtUtil.isTokenExpired(claims)) {
+                System.out.println("JWT Token has expired.");
                 Subject subject = getSubject(request, response);
                 if (subject != null) {
                     subject.logout();
+                    System.out.println("User logged out due to expired token.");
                 }
                 redirectToKeycloakLogout(response);
                 return false;
+            } else {
+                System.out.println("JWT Token is valid. Proceeding with authentication.");
+                return executeLogin(request, response);
             }
-            // Token is valid, proceed with authentication
-            return executeLogin(request, response);
+        } else {
+            System.out.println("No JWT Token found in request. Access denied.");
         }
-        // If no token is present, deny access
         return false;
     }
 
     // @Override
     protected boolean onLoginFailure(AuthenticationToken token, Exception e, ServletRequest request, ServletResponse response) {
+        System.out.println("Login failed. Reason: " + e.getMessage());
+
         // Handle login failure (e.g., invalid token)
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         try {
@@ -74,12 +87,16 @@ public class JwtTokenFilter extends AuthenticatingFilter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authHeader = httpRequest.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7);  // Remove "Bearer " prefix
+            String token = authHeader.substring(7);  // Remove "Bearer " prefix
+            System.out.println("Extracted JWT Token: " + token);
+            return token;
         }
+        System.out.println("No Authorization header found or does not start with Bearer.");
         return null;
     }
 
     private void redirectToKeycloakLogout(ServletResponse response) throws Exception {
+        System.out.println("Redirecting to Keycloak logout...");
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.sendRedirect("https://your-keycloak-server/auth/realms/{realm}/protocol/openid-connect/logout?redirect_uri=your-app-url");
     }

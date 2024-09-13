@@ -18,6 +18,32 @@
             <artifactId>javax.servlet</artifactId>
             <version>4.0.4</version>
         </dependency>
+        <!-- pac4j-jwt dependency for JWT support -->
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-jwt</artifactId>
+            <version>5.5.2</version> <!-- Adjust to latest stable version -->
+        </dependency>
+
+        <!-- pac4j-shiro for integrating pac4j with Apache Shiro -->
+        <dependency>
+            <groupId>org.pac4j</groupId>
+            <artifactId>pac4j-shiro</artifactId>
+            <version>5.5.2</version> <!-- Adjust to latest stable version -->
+        </dependency>
+
+        <!-- Other dependencies you already have -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>10.1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.orbit</groupId>
+            <artifactId>javax.servlet</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

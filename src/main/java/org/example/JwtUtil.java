@@ -3,6 +3,7 @@ package org.example;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import java.util.Date;
 
 /**
  * This utility can be used to check if the JWT has expired or is invalid.
@@ -29,4 +30,3 @@ public class JwtUtil {
         return claims.getExpiration().before(new Date());
     }
 }
-

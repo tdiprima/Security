@@ -7,7 +7,7 @@
     <!-- Define a filter that will intercept requests and check JWT tokens -->
     <filter>
         <filter-name>jwtTokenFilter</filter-name>
-        <filter-class>org.example.JwtTokenFilter</filter-class> <!-- Replace with your actual class -->
+        <filter-class>org.example.JwtTokenFilter</filter-class>
     </filter>
 
     <!-- Map the filter to intercept specific URLs (e.g., /api/*) -->

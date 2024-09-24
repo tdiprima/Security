@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "yourSecretKey";
+    private static final String SECRET_KEY = "mySuperSecretKey";
 
     public Claims parseToken(String jwtToken) {
         try {

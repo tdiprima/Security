@@ -1,7 +1,6 @@
 package org.example;
 
 import io.jsonwebtoken.Claims;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -25,12 +24,15 @@ public class JwtTokenFilter extends AuthenticatingFilter {
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
         // Extract JWT from Authorization header
         String jwtToken = getTokenFromRequest(request);
+
         if (jwtToken != null) {
-            Claims claims = jwtUtil.parseToken(jwtToken);
+            Claims claims = jwtUtil.parseToken(jwtToken); // Parsing the JWT token
             if (claims != null) {
-                // Create an AuthenticationToken using parsed claims (e.g., username)
-                String username = claims.getSubject();  // Assumes subject is the username
+                // Create and return an AuthenticationToken using parsed claims (e.g., subject as username)
+                String username = claims.getSubject(); // Assumes the JWT subject is the username
                 System.out.println("JWT Token successfully parsed. Username: " + username);
+
+                // The jwtToken is used here as both the username and password for token-based authentication
                 return new UsernamePasswordToken(username, jwtToken);
             } else {
                 System.out.println("JWT Token is invalid or cannot be parsed.");
@@ -38,7 +40,9 @@ public class JwtTokenFilter extends AuthenticatingFilter {
         } else {
             System.out.println("No JWT Token found in the request.");
         }
-        return null;  // If token is missing or invalid, return null
+
+        // If the token is missing or invalid, return null
+        return null;
     }
 
     @Override
@@ -100,4 +104,5 @@ public class JwtTokenFilter extends AuthenticatingFilter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.sendRedirect("https://your-keycloak-server/auth/realms/{realm}/protocol/openid-connect/logout?redirect_uri=your-app-url");
     }
+
 }

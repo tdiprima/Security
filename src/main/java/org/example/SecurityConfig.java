@@ -23,7 +23,7 @@ public class SecurityConfig {
         // Create the JwtClient
 //        JwtClient jwtClient = new JwtClient();
 //        jwtClient.setAuthenticator(jwtAuthenticator);
-
         return jwtAuthenticator;
     }
+
 }

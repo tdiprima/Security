@@ -77,7 +77,7 @@ Here's how you can modify `MyWicketApplication` to integrate JWT authentication 
 
 With this setup, your Wicket application will now validate JWT tokens on every request cycle, ensuring proper authentication before allowing access to protected pages.
 
-<span style="color:blue;font-size:larger;">Do I have to set up shiro.ini?
+## shiro.ini?
 
 No, you don't strictly need to set up a `shiro.ini` file if you are using pac4j for JWT authentication and managing most of the security logic through Spring Boot and pac4j's configuration. However, if you plan to use Apache Shiro for additional security management, such as role-based access control (RBAC), session management, or other advanced features that Shiro offers, then you might want to configure a `shiro.ini` file.
 

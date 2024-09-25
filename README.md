@@ -42,6 +42,8 @@ In your Wicket application, you would add a `SpringComponentInjector` to inject 
 
 This setup should give you a solid foundation to integrate JWT-based security using pac4j, Shiro, and Keycloak in a Spring Boot + Wicket application.
 
+## MyWicketApplication?
+
 <span style="color:blue;font-size:larger;">In MyWicketApplication, it says "You can use securityConfig.pac4jConfig() here to manage JWT authentication".  Can you write the code for me?
 
 Here's how you can modify `MyWicketApplication` to integrate JWT authentication using the `pac4jConfig()` from your `SecurityConfig`:
